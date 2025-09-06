@@ -4,10 +4,10 @@ import {
   IBillResponse,
   IListBillsParams,
   ISimulateBillResponse,
-} from '@/types/BillTypes';
+  APIOptions,
+} from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
-import { APIOptions } from '@/types/AsaasTypes';
 
 export class BillAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {

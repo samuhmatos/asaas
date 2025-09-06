@@ -4,7 +4,7 @@ import {
   IListPixTransactionsParams,
   IListPixTransactionsResponse,
   IPixTransaction,
-} from '../types/AsaasTypes';
+} from '../types';
 import { BaseAPI } from './BaseAPI';
 
 export class PixTransactionsAPI extends BaseAPI {

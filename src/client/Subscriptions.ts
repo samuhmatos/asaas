@@ -9,7 +9,7 @@ import {
   IListSubscriptionsResponse,
   IListSubscriptionsParams,
   ICreateSubscriptionWithCreditCardParams,
-} from '../types/AsaasTypes';
+} from '../types';
 import { BaseAPI } from './BaseAPI';
 
 export class SubscriptionsAPI extends BaseAPI {

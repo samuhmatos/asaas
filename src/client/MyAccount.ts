@@ -8,10 +8,10 @@ import {
   IPaymentCheckoutConfigResponse,
   IUpdateCommercialInfo,
   IUpdatePaymentCheckoutConfig,
-} from '@/types';
+  APIOptions,
+} from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
-import { APIOptions } from '@/types/AsaasTypes';
 export class MyAccountAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
     super(apiClient, options);

@@ -38,8 +38,7 @@ export class AsaasClient {
       },
     });
 
-    const printError =
-      options.printError !== undefined ? options.printError : true;
+    const printError = options.printError || true;
     const apiOptions = { printError };
 
     this.customers = new CustomersAPI(apiClient, apiOptions);

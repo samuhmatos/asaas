@@ -1,9 +1,17 @@
 {
-  "name": "asaas",
+  "name": "asaas-kit",
   "version": "1.1.0",
   "description": "Unofficial Asaas Payment Gateway SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuhmatos/asaas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samuhmatos/asaas/issues"
+  },
+  "homepage": "https://github.com/samuhmatos/asaas#readme",
   "files": [
     "./dist"
   ],
@@ -16,9 +24,19 @@
   "keywords": [
     "asaas",
     "asaas sdk",
-    "payment gateway sdk"
+    "asaas-sdk",
+    "payment gateway sdk",
+    "asaas gateway",
+    "asaas-gateway",
+    "asaas api",
+    "asaas-api",
+    "asaas kit",
+    "asaas-kit",
+    "payment",
+    "pagamentos",
+    "pagamentos gateway"
   ],
-  "author": "Eduardo Matheus Bernardo Silva",
+  "author": "Samuel Matos",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2"

@@ -4,10 +4,10 @@ import {
   IUpdateInvoiceParams,
   IInvoiceResponse,
   IListInvoicesParams,
-} from '@/types/InvoiceTypes';
+  APIOptions,
+} from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
-import { APIOptions } from '@/types/AsaasTypes';
 
 export class InvoicesAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {

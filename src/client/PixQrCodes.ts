@@ -3,7 +3,7 @@ import {
   APIOptions,
   IPixStaticQrCode,
   IPixStaticQrCodeResponse,
-} from '../types/AsaasTypes';
+} from '../types';
 import { BaseAPI } from './BaseAPI';
 
 export class PixQrCodesAPI extends BaseAPI {

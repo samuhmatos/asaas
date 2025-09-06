@@ -1,10 +1,11 @@
-import { APIOptions, IAsaasDeleteResponse } from '@/types/AsaasTypes';
 import {
   ICreateWebhookParams,
   IListWebhooksResponse,
   IUpdateWebhookParams,
   IWebhookResponse,
-} from '@/types/WebhookTypes';
+  APIOptions,
+  IAsaasDeleteResponse,
+} from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
 

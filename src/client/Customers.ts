@@ -6,7 +6,7 @@ import {
   IAsaasDeleteResponse,
   IListAsaasCustomerResponse,
   IListCustomersParams,
-} from '../types/AsaasTypes';
+} from '../types';
 import { BaseAPI } from './BaseAPI';
 
 export class CustomersAPI extends BaseAPI {

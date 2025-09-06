@@ -4,10 +4,10 @@ import {
   ICreateAccountParams,
   IListAccountsParams,
   IListAccountsResponse,
-} from '@/types/AccountTypes';
+  APIOptions,
+} from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
-import { APIOptions } from '@/types/AsaasTypes';
 
 export class AccountsAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {

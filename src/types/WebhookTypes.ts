@@ -1,17 +1,18 @@
-import { InvoicesWebhook } from '@/enums/InvoicesWebhook';
-import { PaymentsWebhook } from '@/enums/PaymentsWebhook';
-import { IAsaasPagination, IAsaasPaymentResponse } from '@/types/AsaasTypes';
-import { IInvoiceResponse } from '@/types/InvoiceTypes';
-import { IBillResponse } from '@/types/BillTypes';
 import {
   AccountStatusWebhook,
   BillWebhook,
+  InvoicesWebhook,
+  PaymentsWebhook,
   PhoneRechargeWebhook,
   ReceivableWebhook,
   TransferWebhook,
 } from '@/enums';
-import { ITransferResponse } from './TransferTypes';
 import { IAccountStatus } from './AccountTypes';
+import { IAsaasPagination } from './AsaasTypes';
+import { IBillResponse } from './BillTypes';
+import { IInvoiceResponse } from './InvoiceTypes';
+import { IAsaasPaymentResponse } from './PaymentTypes';
+import { ITransferResponse } from './TransferTypes';
 
 export type WebhookSendType = 'SEQUENTIALLY' | 'NON_SEQUENTIALLY';
 

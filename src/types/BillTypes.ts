@@ -1,4 +1,4 @@
-import { IAsaasPagination } from '@/types/AsaasTypes';
+import { IAsaasPagination } from './AsaasTypes';
 
 export interface ICreateBillParams {
   identificationField: string;

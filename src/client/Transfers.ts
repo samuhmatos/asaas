@@ -4,9 +4,9 @@ import {
   ITransferResponse,
   IListTransfersParams,
   ICreateInternalTransferParams,
-} from '@/types/TransferTypes';
+  APIOptions,
+} from '../types';
 import { AxiosInstance } from 'axios';
-import { APIOptions } from '../types/AsaasTypes';
 import { BaseAPI } from './BaseAPI';
 
 export class TransfersAPI extends BaseAPI {

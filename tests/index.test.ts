@@ -1,5 +1,5 @@
 // Preferência no import do index pra garantir que tudo relevante está sendo exportado
-import { AsaasClient, parseWebhookPayload } from '../index';
+import { AsaasClient, parseWebhookPayload } from '../src';
 import axios from 'axios';
 
 import webhookPaymentJSON from './fixtures/webhook_payment.json';

@@ -8,7 +8,7 @@ import {
   IListAsaasInstallmentsResponse,
   IListInstallmentsParams,
   APIOptions,
-} from '../types/AsaasTypes';
+} from '../types';
 import { BaseAPI } from './BaseAPI';
 
 export class InstallmentsAPI extends BaseAPI {

@@ -11,7 +11,7 @@ import {
   IAsaasPaymentResponse,
   IListAsaasPaymentsResponse,
   IListPaymentsParams,
-} from '../types/AsaasTypes';
+} from '../types';
 import { BaseAPI } from './BaseAPI';
 
 export class PaymentsAPI extends BaseAPI {
