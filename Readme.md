@@ -3,16 +3,15 @@
 
 A simple sdk made to abstract most of the Asaas payment gateway api requests.
 
-last update: 06/05/2024
+
+last update: 07/09/2025
 Items updated:
-- Global: Added option to disable automatic error logging (printError)
-- Payments: Added support split array.
+- Global: Added custom error handler functionality (errorHandler)
 
 
 ## Author
 
-- [Eduardo Matheus Bernardo Silva](https://github.com/eduardobernardo/)
-- [Idxcode](https://idxcode.com.br)
+- [Samuel Matos](https://linkedin.com/in/o-samuelmatos)
 
 
 ## Reference
@@ -67,6 +66,7 @@ const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   //sandbox?: boolean;
   //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
   //printError?: boolean (default: true); // Determines whether errors will be automatically logged to the console
+  //errorHandler?: (action: Action, error: AxiosError) => void; // Custom error handler function
 });
 ```
 
@@ -93,6 +93,27 @@ const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   printError: false // Disables automatic error logging to the console
 });
 ```
+
+### Custom Error Handler
+You can provide a custom error handler function to handle errors in your own way. The error handler receives the action that failed and the Axios error object:
+
+```javascript
+import { AsaasClient } from 'asaas';
+import { Action } from 'asaas';
+import { AxiosError } from 'axios';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  errorHandler: (action: Action, error: AxiosError) => {
+    // Custom error handling logic
+    console.log(`Action ${action} failed:`, error.message);
+    
+    // You can send errors to external services, log to files, etc.
+    // Example: sendToErrorTrackingService(action, error);
+  }
+});
+```
+
+The custom error handler will be called for every API error, allowing you to implement your own error handling strategy while still maintaining the default behavior of throwing the error.
 
 ### Customers
 

@@ -1,0 +1,138 @@
+name: Release and Publish
+
+on:
+  push:
+    branches: [main]           # cobre pushes diretos na main
+  pull_request:
+    types: [closed]            # roda quando PR é fechado
+    branches: [main]           # ...e o alvo é main
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type (manual only)'
+        required: true
+        default: 'patch'
+        type: choice
+        options: [patch, minor, major]
+      release_body:
+        description: 'Release body (optional - if empty, auto generate notes)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: release-and-publish
+  cancel-in-progress: false
+
+jobs:
+  release:
+    # evita duplo disparo no merge de PR (preferimos o evento do PR)
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true) ||
+      (github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'Merge pull request'))
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.3
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Run linting
+        run: pnpm lint
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      # Auto-bump quando for push OU PR mergeado; manual usa o input
+      - name: Decide version bump (auto on push/PR)
+        id: autodetect
+        if: github.event_name != 'workflow_dispatch'
+        shell: bash
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$LAST_TAG" ]; then
+            RANGE="${LAST_TAG}..HEAD"
+          else
+            RANGE="HEAD~50..HEAD"
+          fi
+          COMMITS=$(git log --format=%B $RANGE)
+          BUMP="patch"
+          if echo "$COMMITS" | grep -Eqi 'BREAKING CHANGE|!:'; then
+            BUMP="major"
+          elif echo "$COMMITS" | grep -Eqi '^feat(\(|:)|^feat!'; then
+            BUMP="minor"
+          fi
+          echo "bump=$BUMP" >> $GITHUB_OUTPUT
+
+      - name: Set bump type
+        id: bump
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.version_type }}" >> $GITHUB_OUTPUT
+          else
+            echo "type=${{ steps.autodetect.outputs.bump }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Bump version (no tag yet)
+        run: |
+          pnpm version ${{ steps.bump.outputs.type }} --no-git-tag-version
+          echo "NEW_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Commit version bump and create tag
+        run: |
+          git add package.json pnpm-lock.yaml
+          git commit -m "chore: release v${NEW_VERSION} [skip ci]" || echo "No changes to commit"
+          git tag -a "v${NEW_VERSION}" -m "Release v${NEW_VERSION}"
+          git push origin HEAD:main
+          git push origin "v${NEW_VERSION}"
+
+      - name: Publish to npm
+        run: |
+          if npm view "$(node -p "require('./package.json').name")@${NEW_VERSION}" version >/dev/null 2>&1; then
+            echo "Version ${NEW_VERSION} already published. Skipping."
+          else
+            pnpm publish --access public --no-git-checks
+          fi
+
+      - name: Create GitHub Release (auto notes if no body)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.NEW_VERSION }}
+          name: Release v${{ env.NEW_VERSION }}
+          body: ${{ github.event.inputs.release_body }}
+          generate_release_notes: ${{ github.event.inputs.release_body == '' || github.event_inputs.release_body == null }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

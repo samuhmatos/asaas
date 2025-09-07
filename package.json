@@ -1,6 +1,6 @@
 {
   "name": "asaas-kit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Unofficial Asaas Payment Gateway SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,9 +17,10 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "tsc",
+    "build": "tsc --build --clean && tsc --build",
     "lint": "eslint --ext .ts --ext .tsx ./src --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublishOnly": "pnpm build"
   },
   "keywords": [
     "asaas",
@@ -38,6 +39,10 @@
   ],
   "author": "Samuel Matos",
   "license": "ISC",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "axios": "^1.7.2"
   },
