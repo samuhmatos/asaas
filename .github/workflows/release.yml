@@ -88,19 +88,24 @@ jobs:
         if: github.event_name != 'workflow_dispatch'
         shell: bash
         run: |
+          # tenta pegar última tag, se não existir fica vazio
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
           if [ -n "$LAST_TAG" ]; then
             RANGE="${LAST_TAG}..HEAD"
+            COMMITS=$(git log --format=%B $RANGE)
           else
-            RANGE="HEAD~50..HEAD"
+            # sem tags ainda: pega só os últimos 50 commits ou menos
+            COMMITS=$(git log --format=%B -n 50)
           fi
-          COMMITS=$(git log --format=%B $RANGE)
+
           BUMP="patch"
           if echo "$COMMITS" | grep -Eqi 'BREAKING CHANGE|!:'; then
             BUMP="major"
           elif echo "$COMMITS" | grep -Eqi '^feat(\(|:)|^feat!'; then
             BUMP="minor"
           fi
+
           echo "bump=$BUMP" >> $GITHUB_OUTPUT
 
       - name: Set bump type
