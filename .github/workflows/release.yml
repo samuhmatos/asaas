@@ -2,10 +2,10 @@ name: Release and Publish
 
 on:
   push:
-    branches: [main]           # cobre pushes diretos na main
+    branches: [main]
   pull_request:
-    types: [closed]            # roda quando PR é fechado
-    branches: [main]           # ...e o alvo é main
+    types: [closed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       version_type:
@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   release:
-    # evita duplo disparo no merge de PR (preferimos o evento do PR)
+    # evita rodar duas vezes no merge (preferimos o evento do PR)
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true) ||
@@ -46,15 +46,24 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # 1) Instala pnpm lendo a versão do package.json (packageManager)
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false  # não instalar deps aqui
+
+      # 2) Node + cache de pnpm (agora o setup-node encontra pnpm no PATH)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.6.3
+      - name: Show tool versions
+        run: |
+          node -v
+          pnpm -v
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -73,7 +82,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      # Auto-bump quando for push OU PR mergeado; manual usa o input
+      # Auto-bump (push/PR); manual usa o input
       - name: Decide version bump (auto on push/PR)
         id: autodetect
         if: github.event_name != 'workflow_dispatch'
@@ -131,6 +140,6 @@ jobs:
           tag_name: v${{ env.NEW_VERSION }}
           name: Release v${{ env.NEW_VERSION }}
           body: ${{ github.event.inputs.release_body }}
-          generate_release_notes: ${{ github.event.inputs.release_body == '' || github.event_inputs.release_body == null }}
+          generate_release_notes: ${{ github.event.inputs.release_body == '' || github.event.inputs.release_body == null }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
