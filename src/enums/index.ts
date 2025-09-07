@@ -2,6 +2,7 @@ export * from './AccountStatusWebhook';
 export * from './Action';
 export * from './BillWebhook';
 export * from './InvoicesWebhook';
+export * from './NotificationEvent';
 export * from './PaymentsWebhook';
 export * from './PhoneRechargeWebhook';
 export * from './ReceivableWebhook';

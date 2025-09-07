@@ -3,6 +3,7 @@ export * from './AsaasTypes';
 export * from './BillTypes';
 export * from './CustomerTypes';
 export * from './InvoiceTypes';
+export * from './NotificationTypes';
 export * from './PaymentTypes';
 export * from './PixTransaction';
 export * from './SubscriptionTypes';
