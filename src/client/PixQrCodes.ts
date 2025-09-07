@@ -5,13 +5,14 @@ import {
   IPixStaticQrCodeResponse,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums';
 
-export class PixQrCodesAPI extends BaseAPI {
+export class PixAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
     super(apiClient, options);
   }
 
-  async newStatic(
+  async newQrCodeStatic(
     params?: IPixStaticQrCode,
   ): Promise<IPixStaticQrCodeResponse> {
     try {
@@ -20,7 +21,7 @@ export class PixQrCodesAPI extends BaseAPI {
       });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao criar QR Code estático:');
+      return this.handleError(Action.CREATE_STATIC_QRCODE_PIX, error);
     }
   }
 }

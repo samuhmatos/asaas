@@ -8,6 +8,7 @@ import {
   IListCustomersParams,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums/Action';
 
 export class CustomersAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -19,7 +20,7 @@ export class CustomersAPI extends BaseAPI {
       const response = await this.apiClient.post('/customers', customerData);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao criar o cliente:');
+      return this.handleError(Action.CREATE_CUSTOMER, error);
     }
   }
 
@@ -30,7 +31,7 @@ export class CustomersAPI extends BaseAPI {
       const response = await this.apiClient.get('/customers', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a lista de clientes:');
+      return this.handleError(Action.LIST_CUSTOMER, error);
     }
   }
 
@@ -39,7 +40,7 @@ export class CustomersAPI extends BaseAPI {
       const response = await this.apiClient.get(`/customers/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter o cliente:');
+      return this.handleError(Action.GET_CUSTOMER, error);
     }
   }
 
@@ -48,7 +49,7 @@ export class CustomersAPI extends BaseAPI {
       const response = await this.apiClient.delete(`/customers/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao deletar o cliente:');
+      return this.handleError(Action.DELETE_CUSTOMER, error);
     }
   }
 
@@ -57,7 +58,7 @@ export class CustomersAPI extends BaseAPI {
       const response = await this.apiClient.post(`/customers/${id}/restore`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao restaurar o cliente:');
+      return this.handleError(Action.RESTORE_CUSTOMER, error);
     }
   }
 
@@ -72,7 +73,7 @@ export class CustomersAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao atualizar o cliente:');
+      return this.handleError(Action.UPDATE_CUSTOMER, error);
     }
   }
 }

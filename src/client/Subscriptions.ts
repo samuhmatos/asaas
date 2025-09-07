@@ -11,6 +11,7 @@ import {
   ICreateSubscriptionWithCreditCardParams,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums/Action';
 
 export class SubscriptionsAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -26,7 +27,7 @@ export class SubscriptionsAPI extends BaseAPI {
       const response = await this.apiClient.post('/subscriptions', params);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao criar uma nova assinatura:');
+      return this.handleError(Action.CREATE_SUBSCRIPTION, error);
     }
   }
 
@@ -37,7 +38,7 @@ export class SubscriptionsAPI extends BaseAPI {
       const response = await this.apiClient.get('/subscriptions', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a lista de assinaturas:');
+      return this.handleError(Action.LIST_SUBSCRIPTION, error);
     }
   }
 
@@ -46,7 +47,7 @@ export class SubscriptionsAPI extends BaseAPI {
       const response = await this.apiClient.get(`/subscriptions/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a assinatura:');
+      return this.handleError(Action.GET_SUBSCRIPTION, error);
     }
   }
 
@@ -57,10 +58,7 @@ export class SubscriptionsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter as cobranças da assinatura:',
-      );
+      return this.handleError(Action.GET_PAYMENTS_SUBSCRIPTION, error);
     }
   }
 
@@ -69,7 +67,7 @@ export class SubscriptionsAPI extends BaseAPI {
       const response = await this.apiClient.delete(`/subscriptions/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao deletar a assinatura:');
+      return this.handleError(Action.DELETE_SUBSCRIPTION, error);
     }
   }
 
@@ -84,7 +82,7 @@ export class SubscriptionsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao atualizar a assinatura:');
+      return this.handleError(Action.UPDATE_SUBSCRIPTION, error);
     }
   }
 }

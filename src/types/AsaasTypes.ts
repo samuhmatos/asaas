@@ -1,14 +1,16 @@
+import { Action } from '../enums';
+import { AxiosError } from 'axios';
+
 export interface AsaasOptions {
   sandbox?: boolean;
   sandboxUrl?: string;
   baseUrl?: string;
   userAgent?: string;
   printError?: boolean;
+  errorHandler?: (action: Action, error: AxiosError) => void;
 }
 
-export interface APIOptions {
-  printError?: boolean;
-}
+export type APIOptions = Pick<AsaasOptions, 'printError' | 'errorHandler'>;
 
 export interface IAsaasPagination<T> {
   object: 'list';

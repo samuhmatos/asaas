@@ -8,6 +8,7 @@ import {
 } from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums/Action';
 
 export class InvoicesAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -19,7 +20,7 @@ export class InvoicesAPI extends BaseAPI {
       const response = await this.apiClient.post('/invoices', params);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao agendar uma nota fiscal:');
+      return this.handleError(Action.CREATE_INVOICE, error);
     }
   }
 
@@ -28,7 +29,7 @@ export class InvoicesAPI extends BaseAPI {
       const response = await this.apiClient.get('/invoices', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a lista de notas fiscal:');
+      return this.handleError(Action.LIST_INVOICE, error);
     }
   }
 
@@ -37,7 +38,7 @@ export class InvoicesAPI extends BaseAPI {
       const response = await this.apiClient.get(`/invoices/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a nota fiscal:');
+      return this.handleError(Action.GET_INVOICE, error);
     }
   }
 
@@ -49,7 +50,7 @@ export class InvoicesAPI extends BaseAPI {
       const response = await this.apiClient.post(`/invoices/${id}`, params);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao atualizar a nota fiscal:');
+      return this.handleError(Action.UPDATE_INVOICE, error);
     }
   }
 
@@ -58,7 +59,7 @@ export class InvoicesAPI extends BaseAPI {
       const response = await this.apiClient.post(`/invoices/${id}/authorize`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao emitir nota fiscal:');
+      return this.handleError(Action.AUTHORIZE_INVOICE, error);
     }
   }
 
@@ -67,7 +68,7 @@ export class InvoicesAPI extends BaseAPI {
       const response = await this.apiClient.post(`/invoices/${id}/cancel`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao cancelar nota fiscal:');
+      return this.handleError(Action.CANCEL_INVOICE, error);
     }
   }
 }

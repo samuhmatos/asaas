@@ -8,6 +8,7 @@ import {
 } from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums';
 
 export class BillAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -19,7 +20,7 @@ export class BillAPI extends BaseAPI {
       const response = await this.apiClient.post('/bill', params);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao criar um pagamento de conta:');
+      return this.handleError(Action.CANCEL_BILL, error);
     }
   }
 
@@ -28,10 +29,7 @@ export class BillAPI extends BaseAPI {
       const response = await this.apiClient.get('/bill', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter a lista de pagamento de contas:',
-      );
+      return this.handleError(Action.LIST_BILL, error);
     }
   }
 
@@ -40,7 +38,7 @@ export class BillAPI extends BaseAPI {
       const response = await this.apiClient.post(`/bill/simulate`, params);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao simular o pagamento de contas:');
+      return this.handleError(Action.SIMULATE_BILL, error);
     }
   }
 
@@ -49,7 +47,7 @@ export class BillAPI extends BaseAPI {
       const response = await this.apiClient.get(`/bill/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter o pagamento de contas:');
+      return this.handleError(Action.GET_BILL, error);
     }
   }
 
@@ -58,7 +56,7 @@ export class BillAPI extends BaseAPI {
       const response = await this.apiClient.post(`/bill/${id}/cancel`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao cancelar o pagamento de contas:');
+      return this.handleError(Action.CANCEL_BILL, error);
     }
   }
 }

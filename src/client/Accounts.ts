@@ -8,6 +8,7 @@ import {
 } from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums';
 
 export class AccountsAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -22,7 +23,7 @@ export class AccountsAPI extends BaseAPI {
       const response = await this.apiClient.post('/accounts', params);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao criar subconta:');
+      this.handleError(Action.CREATE_SUBACCOUNT, error);
     }
   }
 
@@ -31,7 +32,7 @@ export class AccountsAPI extends BaseAPI {
       const response = await this.apiClient.get('/accounts', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a lista de subcontas:');
+      return this.handleError(Action.LIST_SUBACCOUNT, error);
     }
   }
 
@@ -42,7 +43,7 @@ export class AccountsAPI extends BaseAPI {
       });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a subconta:');
+      return this.handleError(Action.GET_SUBACCOUNT, error);
     }
   }
 }

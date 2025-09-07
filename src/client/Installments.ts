@@ -10,6 +10,7 @@ import {
   APIOptions,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums/Action';
 
 export class InstallmentsAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -23,7 +24,7 @@ export class InstallmentsAPI extends BaseAPI {
       const response = await this.apiClient.get('/installments', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a lista de cobranças:');
+      return this.handleError(Action.LIST_INSTALLMENT, error);
     }
   }
 
@@ -32,7 +33,7 @@ export class InstallmentsAPI extends BaseAPI {
       const response = await this.apiClient.get(`/installments/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a cobrança:');
+      return this.handleError(Action.GET_INSTALLMENT, error);
     }
   }
 
@@ -47,10 +48,7 @@ export class InstallmentsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter a linha digiável do boleto da cobrança:',
-      );
+      return this.handleError(Action.GET_PAYMENT_BOOK_INSTALLMENT, error);
     }
   }
 
@@ -59,7 +57,7 @@ export class InstallmentsAPI extends BaseAPI {
       const response = await this.apiClient.delete(`/installments/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao deletar o parcelamento:');
+      return this.handleError(Action.DELETE_INSTALLMENT, error);
     }
   }
 
@@ -68,7 +66,7 @@ export class InstallmentsAPI extends BaseAPI {
       const response = await this.apiClient.post(`/installments/${id}/refund`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao estornar o parcelamento:');
+      return this.handleError(Action.REFUND_INSTALLMENT, error);
     }
   }
 }

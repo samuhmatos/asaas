@@ -8,6 +8,7 @@ import {
 } from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums/Action';
 
 export class TransfersAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -19,10 +20,7 @@ export class TransfersAPI extends BaseAPI {
       const response = await this.apiClient.post('/transfers', params);
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao criar uma transferência para outra conta:',
-      );
+      return this.handleError(Action.CREATE_TRANSFER, error);
     }
   }
 
@@ -31,10 +29,7 @@ export class TransfersAPI extends BaseAPI {
       const response = await this.apiClient.get('/transfers', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter a lista de transferências:',
-      );
+      return this.handleError(Action.LIST_TRANSFER, error);
     }
   }
 
@@ -45,10 +40,7 @@ export class TransfersAPI extends BaseAPI {
       const response = await this.apiClient.post(`/transfers/`, params);
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao criar uma transferência para conta Asaas:',
-      );
+      return this.handleError(Action.CREATE_INTERNAL_TRANSFER, error);
     }
   }
 
@@ -57,7 +49,7 @@ export class TransfersAPI extends BaseAPI {
       const response = await this.apiClient.get(`/transfers/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a transferência:');
+      return this.handleError(Action.GET_TRANSFER, error);
     }
   }
 
@@ -66,7 +58,7 @@ export class TransfersAPI extends BaseAPI {
       const response = await this.apiClient.post(`/transfers/${id}/cancel`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao cancelar a transferência:');
+      return this.handleError(Action.CANCEL_TRANSFER, error);
     }
   }
 }

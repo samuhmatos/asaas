@@ -1,8 +1,10 @@
 import { Callback, IAsaasPagination } from './AsaasTypes';
 
+type BillingType = 'BOLETO' | 'CREDIT_CARD' | 'PIX' | 'UNDEFINED';
+
 export interface IAsaasPayment {
   customer: string;
-  billingType: string;
+  billingType: BillingType;
   dueDate: Date;
   value: number;
   description?: string;
@@ -25,48 +27,56 @@ export interface IAsaasPayment {
 }
 
 export interface IAsaasPaymentResponse {
-  object?: string;
-  id?: string;
-  dateCreated?: Date;
-  customer?: string;
-  paymentLink?: null;
+  object: string;
+  id: string;
+  dateCreated: Date;
+  customer: string;
+  subscription: string | null;
   installment?: string;
-  dueDate?: Date;
-  value?: number;
-  netValue?: number;
-  billingType?: string;
-  canBePaidAfterDueDate?: boolean;
-  pixTransaction?: null;
-  status?: string;
+  checkoutSession: string | null;
+  paymentLink: string | null;
+  value: number;
+  netValue: number;
+  originalValue: null;
+  interestValue: null;
   description?: string;
+  billingType: BillingType;
+  creditCard?: CreditCardResponse;
+  canBePaidAfterDueDate: boolean;
+  pixTransaction?: null;
+  pixQrCodeId?: null;
+  status: string;
+  dueDate: Date;
+  originalDueDate: Date;
+  paymentDate: null;
+  clientPaymentDate: null;
+  installmentNumber: number | null;
+  invoiceUrl: string;
+  invoiceNumber: string;
   externalReference?: string;
-  confirmedDate?: Date;
-  originalValue?: null;
-  interestValue?: null;
-  originalDueDate?: Date;
-  paymentDate?: null;
-  clientPaymentDate?: null;
-  installmentNumber?: null;
-  transactionReceiptUrl?: null;
-  nossoNumero?: string;
-  invoiceUrl?: string;
+  deleted: boolean;
+  anticipated: boolean;
+  anticipable: boolean;
+  creditDate?: Date;
+  estimatedDate?: Date;
+  transactionReceiptUrl: null;
+  nossoNumero: string;
   bankSlipUrl?: string;
-  invoiceNumber?: string;
   discount?: Discount;
   fine?: Fine;
   interest?: Fine;
-  deleted?: boolean;
-  postalService?: boolean;
-  anticipated?: boolean;
-  anticipable?: boolean;
-  refunds?: null;
-  creditCard?: CreditCardResponse;
+  split?: SplitResponse[];
+  postalService: boolean;
+  daysAfterDueDateToRegistrationCancellation: null;
+  chargeBack?: ChargebackResponse;
+  scrows: EscrowResponse | null;
+  refunds: RefundResponse | null;
 }
 
 export interface IListPaymentsParams {
   customer?: string;
   customerGroupName?: string;
-  billingType?: string;
+  billingType?: BillingType;
   status?: string;
   subscription?: string;
   installment?: string;
@@ -158,6 +168,37 @@ export interface Split {
   description?: string;
 }
 
+export interface SplitResponse {
+  id: string;
+  walletId: string;
+  fixedValue: number;
+  percentualValue: number | null;
+  totalValue: number;
+  cancellationReason?: string;
+  status: string;
+  externalReference: string | null;
+  description: string | null;
+}
+
+export interface EscrowResponse {
+  id: string;
+  status: string;
+  expirationDate: Date;
+  finishDate: Date;
+  finishReason: string;
+}
+
+export interface RefundResponse {
+  dateCreated: Date;
+  status: string;
+  value: number;
+  endToEndIdentifier: null;
+  description: null;
+  effectiveDate: Date;
+  transactionReceiptUrl: null;
+  refundedSplits: Array<{ id: string; value: number; done: boolean }>;
+}
+
 export interface IAsaasPaymentLimitResponse {
   creation?: Creation;
 }
@@ -184,7 +225,7 @@ export interface IAsaasPaymentInstallment {
   netValue?: number;
   paymentValue?: number;
   installmentCount?: number;
-  billingType?: string;
+  billingType?: BillingType;
   paymentDate?: null;
   description?: string;
   expirationDay?: number;
@@ -199,6 +240,24 @@ export interface IAsaasPaymentInstallment {
 export interface Chargeback {
   status?: string;
   reason?: string;
+}
+
+export interface ChargebackResponse {
+  id: string;
+  payment: string;
+  installment: string | null;
+  customerAccount: string;
+  status: string;
+  reason: string;
+  disputeStartDate: string;
+  value: number;
+  paymentDate: string;
+  creditCard: {
+    number: string;
+    brand: string;
+  };
+  disputeStatus: string;
+  deadlineToSendDisputeDocuments: string;
 }
 
 export type IListAsaasInstallmentsResponse =

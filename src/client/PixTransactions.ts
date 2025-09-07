@@ -6,6 +6,7 @@ import {
   IPixTransaction,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums';
 
 export class PixTransactionsAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -21,10 +22,7 @@ export class PixTransactionsAPI extends BaseAPI {
       });
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter a lista de transações Pix:',
-      );
+      return this.handleError(Action.LIST_TRANSACTION_PIX, error);
     }
   }
 
@@ -33,7 +31,7 @@ export class PixTransactionsAPI extends BaseAPI {
       const response = await this.apiClient.get(`/pix/transactions/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter o transação Pix:');
+      return this.handleError(Action.GET_TRANSACTION_PIX, error);
     }
   }
 
@@ -44,7 +42,7 @@ export class PixTransactionsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao cancelar o transação Pix:');
+      return this.handleError(Action.CANCEL_TRANSACTION_PIX, error);
     }
   }
 }

@@ -13,6 +13,7 @@ import {
   IListPaymentsParams,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums/Action';
 
 export class PaymentsAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
@@ -24,7 +25,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.post('/payments', paymentData);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao criar a cobrança:');
+      return this.handleError(Action.CREATE_PAYMENT, error);
     }
   }
 
@@ -35,7 +36,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.get('/payments', { params });
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a lista de cobranças:');
+      return this.handleError(Action.LIST_PAYMENT, error);
     }
   }
 
@@ -44,7 +45,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.get(`/payments/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao obter a cobrança:');
+      return this.handleError(Action.GET_PAYMENT, error);
     }
   }
 
@@ -53,7 +54,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.delete(`/payments/${id}`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao deletar a cobrança:');
+      return this.handleError(Action.DELETE_PAYMENT, error);
     }
   }
 
@@ -62,7 +63,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.post(`/payments/${id}/restore`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao restaurar a cobrança:');
+      return this.handleError(Action.RESTORE_PAYMENT, error);
     }
   }
 
@@ -77,7 +78,7 @@ export class PaymentsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao atualizar a cobrança:');
+      return this.handleError(Action.UPDATE_PAYMENT, error);
     }
   }
 
@@ -92,7 +93,7 @@ export class PaymentsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao estornar a cobrança:');
+      return this.handleError(Action.REFUND_PAYMENT, error);
     }
   }
 
@@ -105,10 +106,7 @@ export class PaymentsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter a linha digiável do boleto da cobrança:',
-      );
+      return this.handleError(Action.GET_IDENTIFICATION_PAYMENT, error);
     }
   }
 
@@ -117,10 +115,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.get(`/payments/${id}/pixQrCode`);
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter o QR Code Pix da cobrança:',
-      );
+      return this.handleError(Action.GET_PIX_QRCODE_PAYMENT, error);
     }
   }
 
@@ -135,10 +130,7 @@ export class PaymentsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao confirmar recebimento em dinheiro da cobrança:',
-      );
+      return this.handleError(Action.RECEIVED_IN_CASH_PAYMENT, error);
     }
   }
 
@@ -149,10 +141,7 @@ export class PaymentsAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao desfazer a confirmação de recebimento em dinheiro da cobrança:',
-      );
+      return this.handleError(Action.UNDO_RECEIVED_IN_CASH_PAYMENT, error);
     }
   }
 
@@ -161,10 +150,7 @@ export class PaymentsAPI extends BaseAPI {
       const response = await this.apiClient.get(`/payments/limits`);
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao obter os limites diários de cobrança:',
-      );
+      return this.handleError(Action.GET_LIMITS_PAYMENT, error);
     }
   }
 }

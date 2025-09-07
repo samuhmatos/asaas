@@ -12,6 +12,7 @@ import {
 } from '../types';
 import { AxiosInstance } from 'axios';
 import { BaseAPI } from './BaseAPI';
+import { Action } from '../enums';
 export class MyAccountAPI extends BaseAPI {
   constructor(apiClient: AxiosInstance, options: APIOptions = {}) {
     super(apiClient, options);
@@ -22,8 +23,7 @@ export class MyAccountAPI extends BaseAPI {
       const response = await this.apiClient.get(`/myAccount/commercialInfo`);
       return response.data;
     } catch (error) {
-      console.error('Erro ao recuperar dados comerciais:', error);
-      throw error;
+      return this.handleError(Action.GET_COMMERCIAL_INFO_ACCOUNT, error);
     }
   }
 
@@ -37,7 +37,7 @@ export class MyAccountAPI extends BaseAPI {
       );
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao atualizar dados comerciais:');
+      return this.handleError(Action.UPDATE_COMMERCIAL_INFO_ACCOUNT, error);
     }
   }
 
@@ -52,8 +52,8 @@ export class MyAccountAPI extends BaseAPI {
       return response.data;
     } catch (error) {
       return this.handleError(
+        Action.UPDATE_PAYMENT_CHECKOUT_CONFIG_ACCOUNT,
         error,
-        'Erro ao salvar personalização da fatura:',
       );
     }
   }
@@ -66,8 +66,8 @@ export class MyAccountAPI extends BaseAPI {
       return response.data;
     } catch (error) {
       return this.handleError(
+        Action.GET_PAYMENT_CHECKOUT_CONFIG_ACCOUNT,
         error,
-        'Erro ao recuperar personalização da fatura:',
       );
     }
   }
@@ -77,10 +77,7 @@ export class MyAccountAPI extends BaseAPI {
       const response = await this.apiClient.get(`/myAccount/accountNumber/`);
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao recuperar número de conta no Asaas:',
-      );
+      return this.handleError(Action.GET_ACCOUNT_NUMBER_ACCOUNT, error);
     }
   }
 
@@ -89,7 +86,7 @@ export class MyAccountAPI extends BaseAPI {
       const response = await this.apiClient.get(`/myAccount/fees`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao recuperar taxas da conta:');
+      return this.handleError(Action.GET_FEES_ACCOUNT, error);
     }
   }
 
@@ -98,10 +95,7 @@ export class MyAccountAPI extends BaseAPI {
       const response = await this.apiClient.get(`/myAccount/status`);
       return response.data;
     } catch (error) {
-      return this.handleError(
-        error,
-        'Erro ao consultar situação cadastral da conta:',
-      );
+      return this.handleError(Action.GET_STATUS_ACCOUNT, error);
     }
   }
 
@@ -110,7 +104,7 @@ export class MyAccountAPI extends BaseAPI {
       const response = await this.apiClient.get(`/wallets`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao recuperar walletIds:');
+      return this.handleError(Action.GET_WALLET_IDS_ACCOUNT, error);
     }
   }
 
@@ -119,7 +113,7 @@ export class MyAccountAPI extends BaseAPI {
       const response = await this.apiClient.delete(`/myAccount/`);
       return response.data;
     } catch (error) {
-      return this.handleError(error, 'Erro ao excluir subconta White Label:');
+      return this.handleError(Action.DELETE_ACCOUNT, error);
     }
   }
 }
