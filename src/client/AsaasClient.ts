@@ -4,6 +4,7 @@ import { AccountsAPI } from './Accounts';
 import { BillAPI } from './Bill';
 import { CustomersAPI } from './Customers';
 import { DocumentsAPI } from './Documents';
+import { FinanceAPI } from './Finance';
 import { InstallmentsAPI } from './Installments';
 import { InvoicesAPI } from './Invoices';
 import { MyAccountAPI } from './MyAccount';
@@ -20,6 +21,7 @@ export class AsaasClient {
   public bill: BillAPI;
   public customers: CustomersAPI;
   public documents: DocumentsAPI;
+  public finance: FinanceAPI;
   public installments: InstallmentsAPI;
   public invoices: InvoicesAPI;
   public myAccount: MyAccountAPI;
@@ -51,6 +53,7 @@ export class AsaasClient {
     this.bill = new BillAPI(apiClient, apiOptions);
     this.customers = new CustomersAPI(apiClient, apiOptions);
     this.documents = new DocumentsAPI(apiClient, apiOptions);
+    this.finance = new FinanceAPI(apiClient, apiOptions);
     this.installments = new InstallmentsAPI(apiClient, apiOptions);
     this.invoices = new InvoicesAPI(apiClient, apiOptions);
     this.myAccount = new MyAccountAPI(apiClient, apiOptions);

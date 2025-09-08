@@ -9,6 +9,7 @@ Items updated:
 - Global: Added custom error handler functionality (errorHandler)
 - Notifications: Added complete notifications API support (update, batch update, get by customer)
 - Documents: Added complete documents API support (get pending, upload, get file, update file, delete file)
+- Finance: Added complete finance API support (get balance, payment statistics, split statistics)
 
 
 ## Author
@@ -36,7 +37,7 @@ Items updated:
  - [ ] Mobile Phone Recharges [(Recargas de celular)](https://docs.asaas.com/reference/solicitar-recarga)
  - [ ] Credit Bureau Report [(Consulta Serasa)](https://docs.asaas.com/reference/realizar-consulta)
  - [ ] Financial Transactions [(Extrato)](https://docs.asaas.com/reference/recuperar-extrato)
- - [ ] Finance [(Informações financeiras)](https://docs.asaas.com/reference/recuperar-saldo-da-conta)
+ - [x] Finance [(Informações financeiras)](https://docs.asaas.com/reference/recuperar-saldo-da-conta)
  - [x] My Account [(Informações e personalização da conta)](https://docs.asaas.com/reference/recuperar-dados-comerciais)
  - [x] Invoices [(Notas fiscais)](https://docs.asaas.com/reference/agendar-nota-fiscal)
  - [ ] Fiscal Info [(Informações fiscais)](https://docs.asaas.com/reference/listar-configuracoes-municipais)
@@ -385,6 +386,83 @@ console.log('Document deleted:', deleteResult.deleted);
 | Parameter   | Type       | Description                           |
 | :---------- | :--------- | :------------------------------------------ |
 | `id` | `string` | **Required**. Document file ID |
+
+
+### Finance
+
+#### Get account balance
+Retrieves the current account balance.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Get account balance
+const balance = await asaas.finance.getBalance();
+console.log('Account balance:', balance.balance);
+```
+
+#### Get payment statistics
+Retrieves payment statistics with optional filters.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Get payment statistics with filters
+const statistics = await asaas.finance.getPaymentStatistics({
+  customer: 'cus_123abcde456',
+  billingType: 'PIX',
+  status: 'CONFIRMED',
+  anticipated: false,
+  'dateCreated[ge]': '2024-01-01',
+  'dateCreated[le]': '2024-12-31'
+});
+console.log('Payment statistics:', statistics);
+```
+
+| Parameter   | Type       | Description                           |
+| :---------- | :--------- | :------------------------------------------ |
+| `customer` | `string` | Filter by customer ID |
+| `billingType` | `string` | Filter by billing type (BOLETO, CREDIT_CARD, TRANSFER, DEPOSIT, DEBIT_CARD, PIX) |
+| `status` | `string` | Filter by status (PENDING, RECEIVED, CONFIRMED, OVERDUE) |
+| `anticipated` | `boolean` | Filter anticipated records |
+| `dateCreated[ge]` | `string` | Filter from creation date (YYYY-MM-DD) |
+| `dateCreated[le]` | `string` | Filter to creation date (YYYY-MM-DD) |
+| `dueDate[ge]` | `string` | Filter from due date (YYYY-MM-DD) |
+| `dueDate[le]` | `string` | Filter to due date (YYYY-MM-DD) |
+| `estimatedCreditDate[ge]` | `string` | Filter from estimated credit date (YYYY-MM-DD) |
+| `estimatedCreditDate[le]` | `string` | Filter to estimated credit date (YYYY-MM-DD) |
+| `externalReference` | `string` | Filter by external reference |
+
+#### Get split statistics
+Retrieves split payment statistics.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Get split statistics
+const splitStats = await asaas.finance.getSplitStatistics();
+console.log('Split statistics:', splitStats);
+console.log('Income:', splitStats.income);
+console.log('Value to send:', splitStats.value);
+```
 
 
 ### Payments
