@@ -45,6 +45,23 @@ Items updated:
  - [x] Accounts [(Subcontas Asaas)](https://docs.asaas.com/reference/criar-subconta)
  - [x] Documents [(Envio de documentos White Label)](https://docs.asaas.com/reference/verificar-documentos-pendentes)
 
+## Próximos Passos
+
+Estamos trabalhando nas próximas funcionalidades que serão incluídas em breve no **asaas-kit**:
+
+- [ ] **Pix**: criação e gestão de chaves Pix
+- [ ] **Pix Transactions**: pagamento via QR Code Pix
+- [ ] **Payment Links**: geração de links de pagamento
+- [ ] **Anticipations**: solicitações de antecipação
+- [ ] **Payment Dunnings**: gestão de negativações
+- [ ] **Mobile Phone Recharges**: recarga de celular direto pela API
+- [ ] **Credit Bureau Report**: consultas Serasa
+- [ ] **Financial Transactions**: extrato financeiro detalhado
+- [ ] **Fiscal Info**: informações fiscais municipais
+
+✨ A feature atualmente em desenvolvimento é: **Pix (Criação de chaves e transações Pix)**.
+
+
 ## SDK Documentation
 
 ### Get Start
