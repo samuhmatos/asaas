@@ -73,9 +73,11 @@ export class InstallmentsAPI extends BaseAPI {
 
   async listPaymentsByInstallment(
     id: string,
-  ): Promise<IListAsaasInstallmentsResponse> {
+  ): Promise<IListAsaasPaymentsResponse> {
     try {
-      const response = await this.apiClient.get(`/installments/${id}/payments`);
+      const response = await this.apiClient.get<IListAsaasPaymentsResponse>(
+        `/installments/${id}/payments`,
+      );
       return response.data;
     } catch (error) {
       return this.handleError(Action.LIST_PAYMENTS_BY_INSTALLMENT, error);
