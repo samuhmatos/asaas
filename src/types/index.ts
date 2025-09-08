@@ -2,6 +2,7 @@ export * from './AccountTypes';
 export * from './AsaasTypes';
 export * from './BillTypes';
 export * from './CustomerTypes';
+export * from './DocumentTypes';
 export * from './InvoiceTypes';
 export * from './NotificationTypes';
 export * from './PaymentTypes';

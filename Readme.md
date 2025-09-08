@@ -8,6 +8,7 @@ last update: 07/09/2025
 Items updated:
 - Global: Added custom error handler functionality (errorHandler)
 - Notifications: Added complete notifications API support (update, batch update, get by customer)
+- Documents: Added complete documents API support (get pending, upload, get file, update file, delete file)
 
 
 ## Author
@@ -41,7 +42,7 @@ Items updated:
  - [ ] Fiscal Info [(Informações fiscais)](https://docs.asaas.com/reference/listar-configuracoes-municipais)
  - [x] Webhooks [(Configurações de Webhooks)](https://docs.asaas.com/reference/criar-novo-webhook)
  - [x] Accounts [(Subcontas Asaas)](https://docs.asaas.com/reference/criar-subconta)
- - [ ] Documents [(Envio de documentos White Label)](https://docs.asaas.com/reference/verificar-documentos-pendentes)
+ - [x] Documents [(Envio de documentos White Label)](https://docs.asaas.com/reference/verificar-documentos-pendentes)
 
 ## SDK Documentation
 
@@ -269,6 +270,121 @@ await asaas.notifications.getByCustomer("cus_123abcde456");
 | Parameter   | Type       | Description                           |
 | :---------- | :--------- | :------------------------------------------ |
 | `customerId` | `string` | **Required**. Customer ID |
+
+
+### Documents
+
+#### Get pending documents
+Retrieves all pending documents that need to be uploaded.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Get pending documents
+const documents = await asaas.documents.getPending();
+console.log('Pending documents:', documents.data);
+console.log('Reject reasons:', documents.rejectReasons);
+```
+
+#### Upload document
+Uploads a document for a specific document group.
+
+```javascript
+import { AsaasClient, DocumentType } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Upload a document
+const file = new File(['content'], 'document.pdf', { type: 'application/pdf' });
+const uploadedDocument = await asaas.documents.upload('doc_group_123', {
+  documentFile: file,
+  type: DocumentType.IDENTIFICATION
+});
+console.log('Document uploaded:', uploadedDocument);
+```
+
+| Parameter   | Type       | Description                           |
+| :---------- | :--------- | :------------------------------------------ |
+| `id` | `string` | **Required**. Document group ID |
+| `documentFile` | `File` | **Required**. Document file to upload |
+| `type` | `DocumentType` | **Required**. Type of document |
+
+#### Get document file
+Retrieves information about an uploaded document.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Get document file info
+const documentFile = await asaas.documents.getFile('doc_file_123');
+console.log('Document file:', documentFile);
+```
+
+| Parameter   | Type       | Description                           |
+| :---------- | :--------- | :------------------------------------------ |
+| `id` | `string` | **Required**. Document file ID |
+
+#### Update document file
+Updates an uploaded document with a new file.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Update document file
+const newFile = new File(['new content'], 'updated_document.pdf', { type: 'application/pdf' });
+const updatedDocument = await asaas.documents.updateFile('doc_file_123', {
+  documentFile: newFile
+});
+console.log('Document updated:', updatedDocument);
+```
+
+| Parameter   | Type       | Description                           |
+| :---------- | :--------- | :------------------------------------------ |
+| `id` | `string` | **Required**. Document file ID |
+| `documentFile` | `File` | **Required**. New document file |
+
+#### Delete document file
+Removes an uploaded document.
+
+```javascript
+import { AsaasClient } from 'asaas';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
+  // sandbox: boolean;
+  //sandboxUrl?: string (default: https://sandbox.asaas.com/api/v3);
+  //baseUrl?: string (default: https://api.asaas.com/v3);
+});
+
+// Delete document file
+const deleteResult = await asaas.documents.deleteFile('doc_file_123');
+console.log('Document deleted:', deleteResult.deleted);
+```
+
+| Parameter   | Type       | Description                           |
+| :---------- | :--------- | :------------------------------------------ |
+| `id` | `string` | **Required**. Document file ID |
 
 
 ### Payments
