@@ -4,6 +4,10 @@ import {
   IListPixTransactionsParams,
   IListPixTransactionsResponse,
   IPixTransaction,
+  IPixQrCodePayRequest,
+  IPixQrCodePayResponse,
+  IPixQrCodeDecodeRequest,
+  IPixQrCodeDecodedResponse,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
 import { Action } from '../enums';
@@ -43,6 +47,26 @@ export class PixTransactionsAPI extends BaseAPI {
       return response.data;
     } catch (error) {
       return this.handleError(Action.CANCEL_TRANSACTION_PIX, error);
+    }
+  }
+
+  async payQrCode(body: IPixQrCodePayRequest): Promise<IPixQrCodePayResponse> {
+    try {
+      const response = await this.apiClient.post('/pix/qrCodes/pay', body);
+      return response.data;
+    } catch (error) {
+      return this.handleError(Action.PAY_QRCODE_TRANSACTION_PIX, error);
+    }
+  }
+
+  async decodeQrCode(
+    body: IPixQrCodeDecodeRequest,
+  ): Promise<IPixQrCodeDecodedResponse> {
+    try {
+      const response = await this.apiClient.post('/pix/qrCodes/decode', body);
+      return response.data;
+    } catch (error) {
+      return this.handleError(Action.DECODE_QRCODE_TRANSACTION_PIX, error);
     }
   }
 }

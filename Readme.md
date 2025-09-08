@@ -30,7 +30,7 @@ Items updated:
 - [x] [Installments](#installments) [(Parcelamentos)](https://docs.asaas.com/reference/repurar-um-unico-parcelamento)
 - [x] [Subscriptions](#subscriptions) [(Assinaturas)](https://docs.asaas.com/reference/criar-nova-assinatura)
 - [x] [Pix](#pix) [(Pix)](https://docs.asaas.com/reference/criar-uma-chave)
-- [ ] Pix Transactions [(Transações Pix)](https://docs.asaas.com/reference/pagar-um-qrcode)
+- [x] [Pix Transactions](#pix-transactions) [(Transações Pix)](https://docs.asaas.com/reference/pagar-um-qrcode)
 - [ ] Payment Links (soon) [(Link de pagamentos)](https://docs.asaas.com/reference/criar-um-link-de-pagamentos)
 - [x] [Transfers](#transfers) [(Transferências)](https://docs.asaas.com/reference/transferir-para-conta-de-outra-instituicao-ou-chave-pix)
 - [ ] Anticipations [(Antecipações)](https://docs.asaas.com/reference/solicitar-antecipacao)
@@ -52,7 +52,6 @@ Items updated:
 
 We are working on the next features to be included soon in **asaas-kit**:
 
-- [ ] **Pix Transactions**: payment via Pix QR Code
 - [ ] **Payment Links**: payment link generation
 - [ ] **Anticipations**: anticipation requests
 - [ ] **Payment Dunnings**: dunning management
@@ -62,7 +61,7 @@ We are working on the next features to be included soon in **asaas-kit**:
 - [ ] **Fiscal Info**: municipal fiscal information
 
 
-✨ The currently developed feature is: **Pix (Pix key creation)**.
+✨ The currently developed feature is: **Pix & Pix Transactions**.
 
 ## SDK Documentation
 
@@ -139,7 +138,7 @@ The custom error handler will be called for every API error, allowing you to imp
 
 ### Customers
 
-#### Return all customers
+##### Return all customers
 Returns customers. Filters can be applied, passing an object with the items allowed in the [official documentation](https://docs.asaas.com/reference/listar-clientes).
 
 ```javascript
@@ -167,7 +166,7 @@ await asaas.customers.list({
 | `offset` | `number` | Offset of search.|
 | `limit` | `number` | Limit of results.|
 
-#### Return customer by ID
+##### Return customer by ID
 
 ```javascript
 import { AsaasClient } from 'asaas-kit';
@@ -189,7 +188,7 @@ await asaas.customers.getById("cus_123abcde456");
 
 ### Notifications
 
-#### Update notification
+##### Update notification
 Updates an existing notification configuration.
 
 ```javascript
@@ -226,7 +225,7 @@ await asaas.notifications.update("not_123abcde456", {
 | `whatsappEnabledForCustomer` | `boolean` | Enable/disable WhatsApp message to customer |
 | `scheduleOffset` | `number` | Days before due date to send notification (0, 1, 5, 7, 10, 15, 30) |
 
-#### Update notifications in batch
+##### Update notifications in batch
 Updates multiple notifications for a customer in batch.
 
 ```javascript
@@ -271,7 +270,7 @@ await asaas.notifications.updateBatch({
 | `customer` | `string` | **Required**. Customer ID |
 | `notifications` | `array` | **Required**. Array of notification objects |
 
-#### Get customer notifications
+##### Get customer notifications
 Retrieves all notifications for a specific customer.
 
 ```javascript
@@ -294,7 +293,7 @@ await asaas.notifications.getByCustomer("cus_123abcde456");
 
 ### Documents
 
-#### Get pending documents
+##### Get pending documents
 Retrieves all pending documents that need to be uploaded.
 
 ```javascript
@@ -312,7 +311,7 @@ console.log('Pending documents:', documents.data);
 console.log('Reject reasons:', documents.rejectReasons);
 ```
 
-#### Upload document
+##### Upload document
 Uploads a document for a specific document group.
 
 ```javascript
@@ -339,7 +338,7 @@ console.log('Document uploaded:', uploadedDocument);
 | `documentFile` | `File` | **Required**. Document file to upload |
 | `type` | `DocumentType` | **Required**. Type of document |
 
-#### Get document file
+##### Get document file
 Retrieves information about an uploaded document.
 
 ```javascript
@@ -360,7 +359,7 @@ console.log('Document file:', documentFile);
 | :---------- | :--------- | :------------------------------------------ |
 | `id` | `string` | **Required**. Document file ID |
 
-#### Update document file
+##### Update document file
 Updates an uploaded document with a new file.
 
 ```javascript
@@ -385,7 +384,7 @@ console.log('Document updated:', updatedDocument);
 | `id` | `string` | **Required**. Document file ID |
 | `documentFile` | `File` | **Required**. New document file |
 
-#### Delete document file
+##### Delete document file
 Removes an uploaded document.
 
 ```javascript
@@ -409,7 +408,7 @@ console.log('Document deleted:', deleteResult.deleted);
 
 ### Finance
 
-#### Get account balance
+##### Get account balance
 Retrieves the current account balance.
 
 ```javascript
@@ -426,7 +425,7 @@ const balance = await asaas.finance.getBalance();
 console.log('Account balance:', balance.balance);
 ```
 
-#### Get payment statistics
+##### Get payment statistics
 Retrieves payment statistics with optional filters.
 
 ```javascript
@@ -464,7 +463,7 @@ console.log('Payment statistics:', statistics);
 | `estimatedCreditDate[le]` | `string` | Filter to estimated credit date (YYYY-MM-DD) |
 | `externalReference` | `string` | Filter by external reference |
 
-#### Get split statistics
+##### Get split statistics
 Retrieves split payment statistics.
 
 ```javascript
@@ -486,7 +485,7 @@ console.log('Value to send:', splitStats.value);
 
 ### Payments
 
-#### Return all payments
+##### Return all payments
 Returns payments. Filters can be applied, passing an object with the items allowed in the [official documentation](https://docs.asaas.com/reference/listar-cobrancas).
 
 ```javascript
@@ -518,7 +517,7 @@ await asaas.payments.list({
 
 ### Pix
 
-#### Create static Pix QR Code
+##### Create static Pix QR Code
 Creates a static Pix QR Code for payments.
 
 ```javascript
@@ -536,7 +535,7 @@ const qrCode = await asaas.pix.newQrCodeStatic({
 console.log('Pix QR Code:', qrCode);
 ```
 
-#### Delete static Pix QR Code
+##### Delete static Pix QR Code
 Deletes a static Pix QR Code by its ID.
 
 ```javascript
@@ -544,7 +543,7 @@ const deleted = await asaas.pix.deleteQrCodeStatic('pix_qrcode_id');
 console.log('Deleted:', deleted.deleted);
 ```
 
-#### Create Pix Address Key
+##### Create Pix Address Key
 Creates a new Pix address key (EVP).
 
 ```javascript
@@ -552,7 +551,7 @@ const addressKey = await asaas.pix.createAddressKey({ type: 'EVP' });
 console.log('Address Key:', addressKey);
 ```
 
-#### List Pix Address Keys
+##### List Pix Address Keys
 Lists all Pix address keys.
 
 ```javascript
@@ -560,7 +559,7 @@ const keys = await asaas.pix.listAddressKeys();
 console.log('Pix Address Keys:', keys.data);
 ```
 
-#### Get Pix Address Key by ID
+##### Get Pix Address Key by ID
 Retrieves a Pix address key by its ID.
 
 ```javascript
@@ -568,7 +567,7 @@ const key = await asaas.pix.getAddressKey('pix_key_id');
 console.log('Pix Address Key:', key);
 ```
 
-#### Delete Pix Address Key
+##### Delete Pix Address Key
 Deletes a Pix address key by its ID.
 
 ```javascript
@@ -576,17 +575,46 @@ const deletedKey = await asaas.pix.deleteAddressKey('pix_key_id');
 console.log('Deleted:', deletedKey);
 ```
 
-#### Pix Transactions
-Pix transactions are managed via the `pixTransactions` property of the client. You can list, get, and cancel Pix transactions.
 
+### Pix Transactions
+Pix transactions are managed via the `pixTransactions` property of the client. You can list, get, pay, decode, and cancel Pix transactions.
+
+**List transactions**
 ```javascript
 const transactions = await asaas.pixTransactions.list();
 console.log('Pix Transactions:', transactions.data);
+```
 
+**Get transaction by ID**
+```javascript
 const transaction = await asaas.pixTransactions.getById('pix_transaction_id');
 console.log('Pix Transaction:', transaction);
+```
 
+**Pay a QRCode**
+```javascript
+const payment = await asaas.pixTransactions.payQrCode({
+  qrCode: {
+    payload: 'your-qrcode-payload',
+    value: 100.00,
+    description: 'Payment for order #123',
+    // changeValue, scheduleDate (optional)
+  }
+});
+console.log('Pix Payment:', payment);
+```
+
+**Decode a QRCode**
+```javascript
+const decoded = await asaas.pixTransactions.decodeQrCode({
+  payload: 'your-qrcode-payload'
+  // changeValue (optional)
+});
+console.log('Decoded QRCode:', decoded);
+```
+
+**Cancel a transaction**
+```javascript
 const canceled = await asaas.pixTransactions.cancel('pix_transaction_id');
 console.log('Canceled:', canceled);
 ```
-

@@ -1,5 +1,97 @@
 import { IAsaasPagination } from './AsaasTypes';
 
+// --- Pix QRCode Payment ---
+export interface IPixQrCodePayRequest {
+  qrCode: {
+    payload: string;
+    changeValue?: number;
+    value: number;
+    description?: string;
+    scheduleDate?: string;
+  };
+}
+
+export interface IPixQrCodePayResponse {
+  id: string;
+  endToEndIdentifier?: string;
+  finality?: 'WITHDRAWAL' | 'CHANGE';
+  value: number;
+  changeValue?: number;
+  refundedValue: number;
+  effectiveDate: string;
+  scheduledDate?: string;
+  status: string;
+  type: string;
+  originType: string;
+  conciliationIdentifier?: string;
+  description?: string;
+  transactionReceiptUrl?: string;
+  refusalReason?: string;
+  canBeCanceled: boolean;
+  originalTransaction?: IPixTransaction;
+  externalAccount?: PixTransactionExternalAccount;
+  qrCode?: IPixQrCodeDecodedResponse;
+  payer?: IPixQrCodePayer;
+  payment?: string;
+  canBeRefunded?: boolean;
+  refundDisabledReason?: string;
+  chargedFeeValue?: number;
+  dateCreated?: string;
+  addressKey?: string;
+  addressKeyType?: string;
+  transferId?: string;
+  externalReference?: string;
+}
+
+export interface IPixQrCodePayer {
+  name?: string;
+  cpfCnpj?: string;
+}
+
+// --- Pix QRCode Decode ---
+export interface IPixQrCodeDecodeRequest {
+  payload: string;
+  changeValue?: number;
+}
+
+export interface IPixQrCodeDecodedResponse {
+  payload: string;
+  type: 'STATIC' | 'DYNAMIC' | 'DYNAMIC_WITH_ASAAS_ADDRESS_KEY' | 'COMPOSITE';
+  transactionOriginType?: string;
+  pixKey?: string;
+  conciliationIdentifier?: string;
+  dueDate?: string;
+  expirationDate?: string;
+  finality?: 'WITHDRAWAL' | 'CHANGE';
+  value?: number;
+  changeValue?: number;
+  interest?: number;
+  fine?: number;
+  discount?: number;
+  totalValue?: number;
+  canBePaidWithDifferentValue?: boolean;
+  canBeModifyChangeValue?: boolean;
+  receiver?: IPixQrCodeReceiver;
+  payer?: IPixQrCodePayer;
+  description?: string;
+  canBePaid?: boolean;
+  cannotBePaidReason?: string;
+}
+
+export interface IPixQrCodeReceiver {
+  ispb?: string;
+  ispbName?: string;
+  name?: string;
+  tradingName?: string;
+  cpfCnpj?: string;
+  personType?: 'JURIDICA' | 'FISICA';
+  accountType?:
+    | 'CHECKING_ACCOUNT'
+    | 'SALARY_ACCOUNT'
+    | 'INVESTIMENT_ACCOUNT'
+    | 'PAYMENT_ACCOUNT';
+}
+
 export interface IPixTransaction {
   id: string;
   transferId: string;
