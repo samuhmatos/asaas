@@ -50,7 +50,7 @@ Items updated:
 ### Get Start
 Import the package and instantitate a new Client:
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY);
 ```
@@ -61,7 +61,7 @@ Every request to the Asaas API needs an API Key, which must be passed as the fir
 Optionally you can set base url, enable sandbox mode and set sandbox mode base url.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 //Instantiate a new client
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
@@ -77,7 +77,7 @@ const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
 To enable Sandbox Mode, pass to the client's constructor, as the second parameter, an object with `sandbox` information as `true`. The default sandbox URL is `https://sandbox.asaas.com/api/v3`
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   sandbox: true;
@@ -90,7 +90,7 @@ const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
 By default, the library automatically logs errors to the console when request failures occur. You can disable this behavior by setting the `printError` option to `false`:
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   printError: false // Disables automatic error logging to the console
@@ -101,8 +101,8 @@ const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
 You can provide a custom error handler function to handle errors in your own way. The error handler receives the action that failed and the Axios error object:
 
 ```javascript
-import { AsaasClient } from 'asaas';
-import { Action } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
+import { Action } from 'asaas-sdk';
 import { AxiosError } from 'axios';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
@@ -124,7 +124,7 @@ The custom error handler will be called for every API error, allowing you to imp
 Returns customers. Filters can be applied, passing an object with the items allowed in the [official documentation](https://docs.asaas.com/reference/listar-clientes).
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -151,7 +151,7 @@ await asaas.customers.list({
 #### Return customer by ID
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -174,7 +174,7 @@ await asaas.customers.getById("cus_123abcde456");
 Updates an existing notification configuration.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -211,7 +211,7 @@ await asaas.notifications.update("not_123abcde456", {
 Updates multiple notifications for a customer in batch.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -256,7 +256,7 @@ await asaas.notifications.updateBatch({
 Retrieves all notifications for a specific customer.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -279,7 +279,7 @@ await asaas.notifications.getByCustomer("cus_123abcde456");
 Retrieves all pending documents that need to be uploaded.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -297,7 +297,7 @@ console.log('Reject reasons:', documents.rejectReasons);
 Uploads a document for a specific document group.
 
 ```javascript
-import { AsaasClient, DocumentType } from 'asaas';
+import { AsaasClient, DocumentType } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -324,7 +324,7 @@ console.log('Document uploaded:', uploadedDocument);
 Retrieves information about an uploaded document.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -345,7 +345,7 @@ console.log('Document file:', documentFile);
 Updates an uploaded document with a new file.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -370,7 +370,7 @@ console.log('Document updated:', updatedDocument);
 Removes an uploaded document.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -394,7 +394,7 @@ console.log('Document deleted:', deleteResult.deleted);
 Retrieves the current account balance.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -411,7 +411,7 @@ console.log('Account balance:', balance.balance);
 Retrieves payment statistics with optional filters.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -449,7 +449,7 @@ console.log('Payment statistics:', statistics);
 Retrieves split payment statistics.
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
@@ -471,7 +471,7 @@ console.log('Value to send:', splitStats.value);
 Returns payments. Filters can be applied, passing an object with the items allowed in the [official documentation](https://docs.asaas.com/reference/listar-cobrancas).
 
 ```javascript
-import { AsaasClient } from 'asaas';
+import { AsaasClient } from 'asaas-sdk';
 
 const asaas = new AsaasClient(process.env.ASAAS_API_KEY, {
   // sandbox: boolean;
