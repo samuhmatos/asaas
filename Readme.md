@@ -1,16 +1,17 @@
 # Unofficial Asaas Payment Gateway SDK
-### ❗SDK and documentation under development.
 
 A simple sdk made to abstract most of the Asaas payment gateway api requests.
 
-
-last update: 07/09/2025
+last update: 08/09/2025
 Items updated:
 - Global: Added custom error handler functionality (errorHandler)
 - Notifications: Added complete notifications API support (update, batch update, get by customer)
 - Documents: Added complete documents API support (get pending, upload, get file, update file, delete file)
 - Finance: Added complete finance API support (get balance, payment statistics, split statistics)
+- Pix: Added Pix API support (static QR code, address key management, transactions)
 
+
+### ❗SDK and documentation under development.
 
 ## Author
 
@@ -21,46 +22,47 @@ Items updated:
 
  - [Asaas API Manual](https://docs.asaas.com/)
 
- ## Features
- - [x] Customers [(Clientes)](https://docs.asaas.com/reference/criar-novo-cliente)
- - [x] Payments [(Cobranças)](https://docs.asaas.com/reference/criar-nova-cobranca)
- - [x] Notifications [(Notificações)](https://docs.asaas.com/reference/atualizar-notificacao-existente)
- - [x] Installments [(Parcelamentos)](https://docs.asaas.com/reference/repurar-um-unico-parcelamento)
- - [x] Subscriptions [(Assinaturas)](https://docs.asaas.com/reference/criar-nova-assinatura)
- - [ ] Pix [(Pix)](https://docs.asaas.com/reference/criar-uma-chave)
- - [ ] Pix Transactions [(Transações Pix)](https://docs.asaas.com/reference/pagar-um-qrcode)
- - [ ] Payment Links (soon) [(Link de pagamentos)](https://docs.asaas.com/reference/criar-um-link-de-pagamentos)
- - [x] Transfers [(Transferências)](https://docs.asaas.com/reference/transferir-para-conta-de-outra-instituicao-ou-chave-pix)
- - [ ] Anticipations [(Antecipações)](https://docs.asaas.com/reference/solicitar-antecipacao)
- - [ ] Payment Dunnings [(Negativações)](https://docs.asaas.com/reference/criar-uma-negativacao)
- - [x] Bill [(Pagamento de contas)](https://docs.asaas.com/reference/criar-um-pagamento-de-conta)
- - [ ] Mobile Phone Recharges [(Recargas de celular)](https://docs.asaas.com/reference/solicitar-recarga)
- - [ ] Credit Bureau Report [(Consulta Serasa)](https://docs.asaas.com/reference/realizar-consulta)
- - [ ] Financial Transactions [(Extrato)](https://docs.asaas.com/reference/recuperar-extrato)
- - [x] Finance [(Informações financeiras)](https://docs.asaas.com/reference/recuperar-saldo-da-conta)
- - [x] My Account [(Informações e personalização da conta)](https://docs.asaas.com/reference/recuperar-dados-comerciais)
- - [x] Invoices [(Notas fiscais)](https://docs.asaas.com/reference/agendar-nota-fiscal)
- - [ ] Fiscal Info [(Informações fiscais)](https://docs.asaas.com/reference/listar-configuracoes-municipais)
- - [x] Webhooks [(Configurações de Webhooks)](https://docs.asaas.com/reference/criar-novo-webhook)
- - [x] Accounts [(Subcontas Asaas)](https://docs.asaas.com/reference/criar-subconta)
- - [x] Documents [(Envio de documentos White Label)](https://docs.asaas.com/reference/verificar-documentos-pendentes)
 
-## Próximos Passos
+## Features
+- [x] [Customers](#customers) [(Clientes)](https://docs.asaas.com/reference/criar-novo-cliente)
+- [x] [Payments](#payments) [(Cobranças)](https://docs.asaas.com/reference/criar-nova-cobranca)
+- [x] [Notifications](#notifications) [(Notificações)](https://docs.asaas.com/reference/atualizar-notificacao-existente)
+- [x] [Installments](#installments) [(Parcelamentos)](https://docs.asaas.com/reference/repurar-um-unico-parcelamento)
+- [x] [Subscriptions](#subscriptions) [(Assinaturas)](https://docs.asaas.com/reference/criar-nova-assinatura)
+- [x] [Pix](#pix) [(Pix)](https://docs.asaas.com/reference/criar-uma-chave)
+- [ ] Pix Transactions [(Transações Pix)](https://docs.asaas.com/reference/pagar-um-qrcode)
+- [ ] Payment Links (soon) [(Link de pagamentos)](https://docs.asaas.com/reference/criar-um-link-de-pagamentos)
+- [x] [Transfers](#transfers) [(Transferências)](https://docs.asaas.com/reference/transferir-para-conta-de-outra-instituicao-ou-chave-pix)
+- [ ] Anticipations [(Antecipações)](https://docs.asaas.com/reference/solicitar-antecipacao)
+- [ ] Payment Dunnings [(Negativações)](https://docs.asaas.com/reference/criar-uma-negativacao)
+- [x] [Bill](#bill) [(Pagamento de contas)](https://docs.asaas.com/reference/criar-um-pagamento-de-conta)
+- [ ] Mobile Phone Recharges [(Recargas de celular)](https://docs.asaas.com/reference/solicitar-recarga)
+- [ ] Credit Bureau Report [(Consulta Serasa)](https://docs.asaas.com/reference/realizar-consulta)
+- [ ] Financial Transactions [(Extrato)](https://docs.asaas.com/reference/recuperar-extrato)
+- [x] [Finance](#finance) [(Informações financeiras)](https://docs.asaas.com/reference/recuperar-saldo-da-conta)
+- [x] [My Account](#my-account) [(Informações e personalização da conta)](https://docs.asaas.com/reference/recuperar-dados-comerciais)
+- [x] [Invoices](#invoices) [(Notas fiscais)](https://docs.asaas.com/reference/agendar-nota-fiscal)
+- [ ] Fiscal Info [(Informações fiscais)](https://docs.asaas.com/reference/listar-configuracoes-municipais)
+- [x] [Webhooks](#webhooks) [(Configurações de Webhooks)](https://docs.asaas.com/reference/criar-novo-webhook)
+- [x] [Accounts](#accounts) [(Subcontas Asaas)](https://docs.asaas.com/reference/criar-subconta)
+- [x] [Documents](#documents) [(Envio de documentos White Label)](https://docs.asaas.com/reference/verificar-documentos-pendentes)
 
-Estamos trabalhando nas próximas funcionalidades que serão incluídas em breve no **asaas-kit**:
 
-- [ ] **Pix**: criação e gestão de chaves Pix
-- [ ] **Pix Transactions**: pagamento via QR Code Pix
-- [ ] **Payment Links**: geração de links de pagamento
-- [ ] **Anticipations**: solicitações de antecipação
-- [ ] **Payment Dunnings**: gestão de negativações
-- [ ] **Mobile Phone Recharges**: recarga de celular direto pela API
-- [ ] **Credit Bureau Report**: consultas Serasa
-- [ ] **Financial Transactions**: extrato financeiro detalhado
-- [ ] **Fiscal Info**: informações fiscais municipais
+## Next Steps
 
-✨ A feature atualmente em desenvolvimento é: **Pix (Criação de chaves e transações Pix)**.
+We are working on the next features to be included soon in **asaas-kit**:
 
+- [ ] **Pix Transactions**: payment via Pix QR Code
+- [ ] **Payment Links**: payment link generation
+- [ ] **Anticipations**: anticipation requests
+- [ ] **Payment Dunnings**: dunning management
+- [ ] **Mobile Phone Recharges**: mobile recharge directly via API
+- [ ] **Credit Bureau Report**: Serasa credit checks
+- [ ] **Financial Transactions**: detailed financial statement
+- [ ] **Fiscal Info**: municipal fiscal information
+
+
+✨ The currently developed feature is: **Pix (Pix key creation)**.
 
 ## SDK Documentation
 
@@ -512,3 +514,79 @@ await asaas.payments.list({
 | `installment` | `string` | Filter by **Installment ID**.|
 | `externalReference` | `string` | Filter by **External Reference**.|
 | `paymentDate` | `
+
+
+### Pix
+
+#### Create static Pix QR Code
+Creates a static Pix QR Code for payments.
+
+```javascript
+import { AsaasClient } from 'asaas-kit';
+
+const asaas = new AsaasClient(process.env.ASAAS_API_KEY);
+
+const qrCode = await asaas.pix.newQrCodeStatic({
+  addressKey: 'your-pix-key',
+  value: 100.00,
+  description: 'Payment for order #123',
+  expirationDate: '2025-09-30',
+  allowsMultiplePayments: false
+});
+console.log('Pix QR Code:', qrCode);
+```
+
+#### Delete static Pix QR Code
+Deletes a static Pix QR Code by its ID.
+
+```javascript
+const deleted = await asaas.pix.deleteQrCodeStatic('pix_qrcode_id');
+console.log('Deleted:', deleted.deleted);
+```
+
+#### Create Pix Address Key
+Creates a new Pix address key (EVP).
+
+```javascript
+const addressKey = await asaas.pix.createAddressKey({ type: 'EVP' });
+console.log('Address Key:', addressKey);
+```
+
+#### List Pix Address Keys
+Lists all Pix address keys.
+
+```javascript
+const keys = await asaas.pix.listAddressKeys();
+console.log('Pix Address Keys:', keys.data);
+```
+
+#### Get Pix Address Key by ID
+Retrieves a Pix address key by its ID.
+
+```javascript
+const key = await asaas.pix.getAddressKey('pix_key_id');
+console.log('Pix Address Key:', key);
+```
+
+#### Delete Pix Address Key
+Deletes a Pix address key by its ID.
+
+```javascript
+const deletedKey = await asaas.pix.deleteAddressKey('pix_key_id');
+console.log('Deleted:', deletedKey);
+```
+
+#### Pix Transactions
+Pix transactions are managed via the `pixTransactions` property of the client. You can list, get, and cancel Pix transactions.
+
+```javascript
+const transactions = await asaas.pixTransactions.list();
+console.log('Pix Transactions:', transactions.data);
+
+const transaction = await asaas.pixTransactions.getById('pix_transaction_id');
+console.log('Pix Transaction:', transaction);
+
+const canceled = await asaas.pixTransactions.cancel('pix_transaction_id');
+console.log('Canceled:', canceled);
+```
+

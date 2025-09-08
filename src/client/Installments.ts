@@ -8,6 +8,7 @@ import {
   IListAsaasInstallmentsResponse,
   IListInstallmentsParams,
   APIOptions,
+  IListAsaasPaymentsResponse,
 } from '../types';
 import { BaseAPI } from './BaseAPI';
 import { Action } from '../enums/Action';
@@ -67,6 +68,17 @@ export class InstallmentsAPI extends BaseAPI {
       return response.data;
     } catch (error) {
       return this.handleError(Action.REFUND_INSTALLMENT, error);
+    }
+  }
+
+  async listPaymentsByInstallment(
+    id: string,
+  ): Promise<IListAsaasInstallmentsResponse> {
+    try {
+      const response = await this.apiClient.get(`/installments/${id}/payments`);
+      return response.data;
+    } catch (error) {
+      return this.handleError(Action.LIST_PAYMENTS_BY_INSTALLMENT, error);
     }
   }
 }

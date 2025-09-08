@@ -67,3 +67,49 @@ export interface IPixStaticQrCodeResponse {
   allowsMultiplePayments: boolean;
   expirationDate: string;
 }
+
+export type PixAddressKeyTypePix = 'EVP';
+
+export type PixAddressKeyStatus =
+  | 'AWAITING_ACTIVATION'
+  | 'ACTIVE'
+  | 'AWAITING_DELETION'
+  | 'AWAITING_ACCOUNT_DELETION'
+  | 'DELETED'
+  | 'ERROR';
+
+export interface IPixAddressKeyRequest {
+  type: PixAddressKeyTypePix; // EVP
+}
+
+export interface IPixAddressKeyQrCode {
+  encodedImage?: string;
+  payload?: string;
+}
+
+export interface IPixAddressKey {
+  id: string;
+  key: string;
+  type: PixAddressKeyTypePix;
+  status: PixAddressKeyStatus;
+  dateCreated: string;
+  canBeDeleted: boolean;
+  cannotBeDeletedReason?: string;
+  qrCode?: IPixAddressKeyQrCode;
+}
+
+export interface IListPixAddressKeysParams {
+  offset?: number;
+  limit?: number; // max 100
+  status?: PixAddressKeyStatus;
+  statusList?: string; // API accepts comma-separated statuses
+}
+
+export interface IListPixAddressKeysResponse {
+  data: IPixAddressKey[];
+}
+
+export interface IDeleteStaticQrCodeResponse {
+  id: string;
+  deleted: boolean;
+}

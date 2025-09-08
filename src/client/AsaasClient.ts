@@ -10,7 +10,7 @@ import { InvoicesAPI } from './Invoices';
 import { MyAccountAPI } from './MyAccount';
 import { NotificationsAPI } from './Notifications';
 import { PaymentsAPI } from './Payments';
-import { PixAPI } from './PixQrCodes';
+import { PixAPI } from './Pix';
 import { PixTransactionsAPI } from './PixTransactions';
 import { SubscriptionsAPI } from './Subscriptions';
 import { TransfersAPI } from './Transfers';
